@@ -9,6 +9,9 @@ public class Player {
 
 
     //constructor
+    public Player(){
+
+    }
     public Player(String firstName, String lastName, String nickname, String description) {
         this.firstName = firstName;
         this.lastName = lastName;

@@ -10,11 +10,13 @@ public class Game {
 
     private int player1Score;
     private int player2Score;
+     private int player1MatchesWon;
+    private int player2MatchesWon;
+
     private Player player1;
     private Player player2;
     private List<Player> pointTracker = new ArrayList();
-
-    Scanner scanner = new Scanner(System.in);
+    private List<Player> matchTracker = new ArrayList();
 
     public Game(){
 
@@ -51,7 +53,23 @@ public class Game {
     public void setPlayer2(Player player2) {
         this.player2 = player2;
     }
-    //TODO CLI is the only place for sout
+
+    public int getPlayer1MatchesWon() {
+        return player1MatchesWon;
+    }
+
+    public int getPlayer2MatchesWon() {
+        return player2MatchesWon;
+    }
+
+    public List<Player> getPointTracker() {
+        return pointTracker;
+    }
+
+    public List<Player> getMatchTracker() {
+        return matchTracker;
+    }
+
     public void scorePoint(String whoScored){
 
         if(whoScored.equalsIgnoreCase("1")){
@@ -92,5 +110,51 @@ public class Game {
         }
 
     }
+
+    public int matchSelection(int selection){
+
+        if(selection % 2 == 1){
+            return (selection/2) + 1;
+        }else{
+            throw new IllegalArgumentException();
+        }
+    }
+
+
+    public boolean isMatchActive(int numberOfWinsNeeded){
+        boolean isMatchActive = true;
+        if(player1MatchesWon == numberOfWinsNeeded){
+            isMatchActive = false;
+        } else if (player2Score == numberOfWinsNeeded) {
+            isMatchActive = false;
+        }
+        return isMatchActive;
+    }
+
+    public Player getMatchWinner(){
+
+        if(getPlayer1MatchesWon() > getPlayer2MatchesWon()){
+            return player1;
+        }else {
+            return player2;
+        }
+
+    }
+
+    public void scoreGame(String whoWon){
+
+        if(whoWon.equalsIgnoreCase("1")){
+            //player1 goes up by 1; counter++
+            player1Score ++;
+            pointTracker.add(player1);
+        } else if (whoWon.equalsIgnoreCase("2")) {
+            //player2 goes up by 2; counter++
+            pointTracker.add(player2);
+            player2Score++;
+        }else{
+            throw new IllegalArgumentException();
+        }
+    }
+
 
 }

@@ -15,13 +15,7 @@ public class GameApp {
 
     public void runGame(){
 
-
-        game.setPlayer1Score(0);
-        game.setPlayer2Score(0);
-
-
         System.out.println("Welcome to PingPong");
-
 
         System.out.println("Who is Player 1?");
         String player1input = userInput.nextLine();
@@ -29,16 +23,9 @@ public class GameApp {
         //instead of doing this, i should loop through my list of players and find the player in my database
         Player player1 = new Player(player1input, null, null, null);
         game.setPlayer1(player1);
-       /* Player player1 =
 
-
-        TODO eventually want this to turn into a txt file searcher
-        game.setPlayer1(player1);
-       */
-                System.out.println("Who is Player 2?"); // hello
+        System.out.println("Who is Player 2?"); // hello
         String player2input = userInput.nextLine();
-
-
         Player player2 = new Player(player2input, null, null, null);
         game.setPlayer2(player2);
 
@@ -46,44 +33,50 @@ public class GameApp {
         System.out.println("[1] PingPong to 11");
         System.out.println("[2] PingPong to 21");
         String gameMode = userInput.nextLine();
-        int gameEnd = 0;
+        int gameEnd = getGameEnd(gameMode);
 
+
+        int numberOfWinsNeeded = 0;
+        //gameMode input
         while(true) {
-            try {
-                if(gameMode.equals("1")){
-                    gameEnd = 11;
-                    break;
-                } else if (gameMode.equals("2")) {
-                    gameEnd = 21;
-                    break;
-                }else{
-                    System.out.println("Invalid Selection..");
-                    System.out.println("Try Again");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Something went wrong, try again");
-            }
-        }
-        //TODO create gameMode input
-
-        System.out.println("Enter number of matches: ");
+        System.out.println("Select Number of Matches: ");
+        System.out.println("[1] Single Match");
+        System.out.println("[2] Best of 3 Games");
+        System.out.println("[1] Best of 5 Games");
         String matchNumber = userInput.nextLine();
         int numberOfMatches = Integer.parseInt(matchNumber);
 
-        while(game.isGameStillActive(gameEnd)){
-            scorePoint();
-            System.out.println("----------------------------");
-            System.out.println(game.getPlayer1().getFirstName() + ") " + game.getPlayer1Score());
-            System.out.println(game.getPlayer2().getFirstName() + ") " + game.getPlayer2Score());
-            System.out.println("----------------------------");
+            try {
+                numberOfWinsNeeded = game.matchSelection(numberOfMatches);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Please Select an Odd Number!");
+            }
+        }
+
+
+
+
+        while (game.isMatchActive(numberOfWinsNeeded)) {
+            game.setPlayer1Score(0);
+            game.setPlayer2Score(0);
+
+            while (game.isGameStillActive(gameEnd)) {
+                scorePoint();
+                System.out.println("----------------------------");
+                System.out.println(game.getPlayer1().getFirstName() + ") " + game.getPlayer1Score());
+                System.out.println(game.getPlayer2().getFirstName() + ") " + game.getPlayer2Score());
+                System.out.println("----------------------------");
+            }
+
+
+
         }
         //while loop, call scorePoint within loop
-
-
+        
         //game.getWinner
         System.out.println("The victor is: " + game.getWinner().getFirstName() + "!");
         System.out.println();
-
     }
 
     public void scorePoint(){
@@ -104,7 +97,43 @@ public class GameApp {
         }
     }
 
+    public int getGameEnd(String gameMode){
+        int gameEnd = 0;
+        while(true) {
+            try {
+                if(gameMode.equals("1")){
+                    gameEnd = 11;
+                    break;
+                } else if (gameMode.equals("2")) {
+                    gameEnd = 21;
+                    break;
+                }else{
+                    System.out.println("Invalid Selection..");
+                    System.out.println("Try Again");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Something went wrong, try again");
+            }
+        }
+        return gameEnd;
+    }
 
+    public void scoreGame(){
+        while(true) {
+            System.out.println("Which Player scored:");
+            System.out.println("1. " + game.getPlayer1().getFirstName());
+            System.out.println("2. " + game.getPlayer2().getFirstName());
 
+            String whoWon = userInput.nextLine();
+
+            try {
+                game.scoreGame(whoWon);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid Input");
+                System.out.println("Try again:");
+            }
+        }
+    }
 
 }
