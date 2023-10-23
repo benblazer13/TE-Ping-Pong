@@ -125,7 +125,7 @@ public class Game {
         boolean isMatchActive = true;
         if(player1MatchesWon == numberOfWinsNeeded){
             isMatchActive = false;
-        } else if (player2Score == numberOfWinsNeeded) {
+        } else if (player2MatchesWon == numberOfWinsNeeded) {
             isMatchActive = false;
         }
         return isMatchActive;
@@ -138,19 +138,18 @@ public class Game {
         }else {
             return player2;
         }
-
     }
 
     public void scoreGame(String whoWon){
 
-        if(whoWon.equalsIgnoreCase("1")){
+        if(whoWon.equalsIgnoreCase(getPlayer1().getFirstName())){
             //player1 goes up by 1; counter++
-            player1Score ++;
-            pointTracker.add(player1);
-        } else if (whoWon.equalsIgnoreCase("2")) {
+            player1MatchesWon ++;
+            matchTracker.add(player1);
+        } else if (whoWon.equalsIgnoreCase(getPlayer2().getFirstName())) {
             //player2 goes up by 2; counter++
-            pointTracker.add(player2);
-            player2Score++;
+            matchTracker.add(player2);
+            player2MatchesWon++;
         }else{
             throw new IllegalArgumentException();
         }

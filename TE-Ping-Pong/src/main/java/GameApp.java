@@ -40,9 +40,9 @@ public class GameApp {
         //gameMode input
         while(true) {
         System.out.println("Select Number of Matches: ");
-        System.out.println("[1] Single Match");
-        System.out.println("[2] Best of 3 Games");
-        System.out.println("[1] Best of 5 Games");
+//        System.out.println("[1] Single Match");
+//        System.out.println("[2] Best of 3 Games");
+//        System.out.println("[1] Best of 5 Games");
         String matchNumber = userInput.nextLine();
         int numberOfMatches = Integer.parseInt(matchNumber);
 
@@ -68,15 +68,20 @@ public class GameApp {
                 System.out.println(game.getPlayer2().getFirstName() + ") " + game.getPlayer2Score());
                 System.out.println("----------------------------");
             }
-
-
+            System.out.println("The victor is: " + game.getWinner().getFirstName() + "!");
+            System.out.println();
+            scoreGame(game.getWinner().getFirstName());
+            System.out.println("----------------------------");
+            System.out.println(game.getPlayer1().getFirstName() + ") " + game.getPlayer1MatchesWon());
+            System.out.println(game.getPlayer2().getFirstName() + ") " + game.getPlayer2MatchesWon());
+            System.out.println("----------------------------");
 
         }
         //while loop, call scorePoint within loop
-        
-        //game.getWinner
-        System.out.println("The victor is: " + game.getWinner().getFirstName() + "!");
+        System.out.println("The victor is: " + game.getMatchWinner().getFirstName() + "!");
         System.out.println();
+        //game.getWinner
+
     }
 
     public void scorePoint(){
@@ -118,13 +123,12 @@ public class GameApp {
         return gameEnd;
     }
 
-    public void scoreGame(){
+    public void scoreGame(String whoWon){
         while(true) {
-            System.out.println("Which Player scored:");
-            System.out.println("1. " + game.getPlayer1().getFirstName());
-            System.out.println("2. " + game.getPlayer2().getFirstName());
-
-            String whoWon = userInput.nextLine();
+//            System.out.println("Which Player scored:");
+//            System.out.println("1. " + game.getPlayer1().getFirstName());
+//            System.out.println("2. " + game.getPlayer2().getFirstName());
+//              String whoWon = userInput.nextLine();
 
             try {
                 game.scoreGame(whoWon);
