@@ -17,9 +17,16 @@ public class Game {
     private Player player2;
     private List<Player> pointTracker = new ArrayList();
     private List<Player> matchTracker = new ArrayList();
+    private int gameEnd = 0;
+    private boolean isServing = true;
+    private int serveCounter = 0;
+
 
     public Game(){
 
+    }
+    public Game(int gameEnd){
+        this.gameEnd = gameEnd;
     }
 
     public int getPlayer1Score() {
@@ -62,12 +69,23 @@ public class Game {
         return player2MatchesWon;
     }
 
+    public Player getPlayerServing(){
+        if(isServing == true){
+            return getPlayer1();
+        } else {
+            return getPlayer2();
+        }
+    }
     public List<Player> getPointTracker() {
         return pointTracker;
     }
 
     public List<Player> getMatchTracker() {
         return matchTracker;
+    }
+
+    public void toggleServe(){
+        isServing = !isServing;
     }
 
     public void scorePoint(String whoScored){
@@ -83,9 +101,24 @@ public class Game {
         }else{
             throw new IllegalArgumentException();
         }
+
+        serveCounter++;
+        if (serveCounter == getGameServes()){
+            toggleServe();
+            serveCounter = 0;
+        }
+
+
+    }
+    private int getGameServes(){
+        if (gameEnd == 11){
+            return 2;
+        }else {
+            return 5;
+        }
     }
 
-    public boolean isGameStillActive(int gameEnd){
+    public boolean isGameStillActive(){
         //make constants for game type variables
         boolean isGameActive = true;
 

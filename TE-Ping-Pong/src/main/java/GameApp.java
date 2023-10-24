@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class GameApp {
     private final Scanner userInput = new Scanner(System.in);
 
-    Game game = new Game();
+    Game game;
 
     public static void main(String[] args) {
         GameApp gameApp = new GameApp();
@@ -22,19 +22,21 @@ public class GameApp {
         //Player player1 = data.findPlayerByFirstName();
         //instead of doing this, i should loop through my list of players and find the player in my database
         Player player1 = new Player(player1input, null, null, null);
-        game.setPlayer1(player1);
+
 
         System.out.println("Who is Player 2?"); // hello
         String player2input = userInput.nextLine();
         Player player2 = new Player(player2input, null, null, null);
-        game.setPlayer2(player2);
+
 
         System.out.println("Please select a game mode");
         System.out.println("[1] PingPong to 11");
         System.out.println("[2] PingPong to 21");
         String gameMode = userInput.nextLine();
         int gameEnd = getGameEnd(gameMode);
-
+        game = new Game(gameEnd);
+        game.setPlayer1(player1);
+        game.setPlayer2(player2);
 
         int numberOfWinsNeeded = 0;
         //gameMode input
@@ -61,17 +63,28 @@ public class GameApp {
             game.setPlayer1Score(0);
             game.setPlayer2Score(0);
 
-            while (game.isGameStillActive(gameEnd)) {
+            while (game.isGameStillActive()) {
                 scorePoint();
                 System.out.println("----------------------------");
-                System.out.println(game.getPlayer1().getFirstName() + ") " + game.getPlayer1Score());
-                System.out.println(game.getPlayer2().getFirstName() + ") " + game.getPlayer2Score());
+                System.out.println("----------Game-Score--------");
+                if(game.getPlayerServing() == player1) {
+
+                    System.out.println("*" + game.getPlayer1().getFirstName() + ") " + game.getPlayer1Score());
+                    System.out.println(game.getPlayer2().getFirstName() + ") " + game.getPlayer2Score());
+
+                }else {
+
+                    System.out.println(game.getPlayer1().getFirstName() + ") " + game.getPlayer1Score());
+                    System.out.println("*" + game.getPlayer2().getFirstName() + ") " + game.getPlayer2Score());
+
+                }
                 System.out.println("----------------------------");
             }
             System.out.println("The victor is: " + game.getWinner().getFirstName() + "!");
             System.out.println();
             scoreGame(game.getWinner().getFirstName());
             System.out.println("----------------------------");
+            System.out.println("---------Match-Score--------");
             System.out.println(game.getPlayer1().getFirstName() + ") " + game.getPlayer1MatchesWon());
             System.out.println(game.getPlayer2().getFirstName() + ") " + game.getPlayer2MatchesWon());
             System.out.println("----------------------------");
