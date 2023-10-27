@@ -4,28 +4,28 @@ import Profiles.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Game {
 
     private int player1Score;
     private int player2Score;
-     private int player1MatchesWon;
+    private int player1MatchesWon;
     private int player2MatchesWon;
 
     private Player player1;
     private Player player2;
     private List<Player> pointTracker = new ArrayList();
-    private List<Player> matchTracker = new ArrayList();
+    private List<Player> gameTracker = new ArrayList();
     private int gameEnd = 0;
     private boolean isServing = true;
     private int serveCounter = 0;
 
 
-    public Game(){
+    public Game() {
 
     }
-    public Game(int gameEnd){
+
+    public Game(int gameEnd) {
         this.gameEnd = gameEnd;
     }
 
@@ -69,94 +69,96 @@ public class Game {
         return player2MatchesWon;
     }
 
-    public Player getPlayerServing(){
-        if(isServing == true){
+    public Player getPlayerServing() {
+        if (isServing) {
             return getPlayer1();
         } else {
             return getPlayer2();
         }
     }
+
     public List<Player> getPointTracker() {
         return pointTracker;
     }
 
-    public List<Player> getMatchTracker() {
-        return matchTracker;
+    public List<Player> getGameTracker() {
+        return gameTracker;
     }
 
-    public void toggleServe(){
+    public void toggleServe() {
         isServing = !isServing;
     }
 
-    public void scorePoint(String whoScored){
+    public void scorePoint(String whoScored) {
 
-        if(whoScored.equalsIgnoreCase("1")){
+        if (whoScored.equalsIgnoreCase("1")) {
             //player1 goes up by 1; counter++
-            player1Score ++;
+            player1Score++;
             pointTracker.add(player1);
         } else if (whoScored.equalsIgnoreCase("2")) {
             //player2 goes up by 2; counter++
             pointTracker.add(player2);
             player2Score++;
-        }else{
+        } else {
             throw new IllegalArgumentException();
         }
 
         serveCounter++;
-        if (serveCounter == getGameServes()){
+        if (serveCounter == getGameServes()) {
             toggleServe();
             serveCounter = 0;
         }
 
 
     }
-    private int getGameServes(){
-        if (gameEnd == 11){
+
+    private int getGameServes() {
+        if (gameEnd == 11) {
             return 2;
-        }else {
+        } else {
             return 5;
         }
     }
 
-    public boolean isGameStillActive(){
+    public boolean isGameStillActive() {
         //make constants for game type variables
         boolean isGameActive = true;
 
 
-            if(getPlayer1Score() >= gameEnd & getPlayer1Score() > getPlayer2Score() + 1){
+        if (getPlayer1Score() >= gameEnd & getPlayer1Score() > getPlayer2Score() + 1) {
 
-                isGameActive = false;
-            } else if (getPlayer2Score() >= gameEnd & getPlayer2Score() > getPlayer1Score() + 1) {
+            isGameActive = false;
+        } else if (getPlayer2Score() >= gameEnd & getPlayer2Score() > getPlayer1Score() + 1) {
 
-                isGameActive = false;
-            }
+            isGameActive = false;
+        }
         return isGameActive;
     }
 
 
-    public Player getWinner(){
+    public Player getWinner() {
 
-        if(getPlayer1Score() > getPlayer2Score()){
+        if (getPlayer1Score() > getPlayer2Score()) {
             return player1;
-        }else {
+        } else {
             return player2;
         }
 
     }
 
-    public int matchSelection(int selection){
+    public int matchSelection(int selection) {
 
-        if(selection % 2 == 1){
-            return (selection/2) + 1;
-        }else{
+        if (selection % 2 == 1) {
+            return (selection / 2) + 1;
+        } else {
             throw new IllegalArgumentException();
         }
     }
 
 
-    public boolean isMatchActive(int numberOfWinsNeeded){
+    public boolean isMatchActive(int numberOfWinsNeeded) {
         boolean isMatchActive = true;
-        if(player1MatchesWon == numberOfWinsNeeded){
+        if (player1MatchesWon == numberOfWinsNeeded) {
             isMatchActive = false;
         } else if (player2MatchesWon == numberOfWinsNeeded) {
             isMatchActive = false;
@@ -164,26 +166,26 @@ public class Game {
         return isMatchActive;
     }
 
-    public Player getMatchWinner(){
+    public Player getMatchWinner() {
 
-        if(getPlayer1MatchesWon() > getPlayer2MatchesWon()){
+        if (getPlayer1MatchesWon() > getPlayer2MatchesWon()) {
             return player1;
-        }else {
+        } else {
             return player2;
         }
     }
 
-    public void scoreGame(String whoWon){
+    public void scoreGame(String whoWon) {
 
-        if(whoWon.equalsIgnoreCase(getPlayer1().getFirstName())){
+        if (whoWon.equalsIgnoreCase(getPlayer1().getFirstName())) {
             //player1 goes up by 1; counter++
-            player1MatchesWon ++;
-            matchTracker.add(player1);
+            player1MatchesWon++;
+            gameTracker.add(player1);
         } else if (whoWon.equalsIgnoreCase(getPlayer2().getFirstName())) {
             //player2 goes up by 2; counter++
-            matchTracker.add(player2);
+            gameTracker.add(player2);
             player2MatchesWon++;
-        }else{
+        } else {
             throw new IllegalArgumentException();
         }
     }

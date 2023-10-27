@@ -13,9 +13,10 @@ public class GameApp {
         gameApp.runGame();
     }
 
-    public void runGame(){
-
-        System.out.println("Welcome to PingPong");
+    public void runGame() {
+        System.out.println("----------------------------");
+        System.out.println("----Welcome-to-PingPong-----");
+        System.out.println("----------------------------");
 
         System.out.println("Who is Player 1?");
         String player1input = userInput.nextLine();
@@ -40,13 +41,13 @@ public class GameApp {
 
         int numberOfWinsNeeded = 0;
         //gameMode input
-        while(true) {
-        System.out.println("Select Number of Matches: ");
+        while (true) {
+            System.out.println("Select Number of Matches: ");
 //        System.out.println("[1] Single Match");
 //        System.out.println("[2] Best of 3 Games");
 //        System.out.println("[1] Best of 5 Games");
-        String matchNumber = userInput.nextLine();
-        int numberOfMatches = Integer.parseInt(matchNumber);
+            String matchNumber = userInput.nextLine();
+            int numberOfMatches = Integer.parseInt(matchNumber);
 
             try {
                 numberOfWinsNeeded = game.matchSelection(numberOfMatches);
@@ -57,8 +58,6 @@ public class GameApp {
         }
 
 
-
-
         while (game.isMatchActive(numberOfWinsNeeded)) {
             game.setPlayer1Score(0);
             game.setPlayer2Score(0);
@@ -67,12 +66,12 @@ public class GameApp {
                 scorePoint();
                 System.out.println("----------------------------");
                 System.out.println("----------Game-Score--------");
-                if(game.getPlayerServing() == player1) {
+                if (game.getPlayerServing() == player1) {
 
                     System.out.println("*" + game.getPlayer1().getFirstName() + ") " + game.getPlayer1Score());
                     System.out.println(game.getPlayer2().getFirstName() + ") " + game.getPlayer2Score());
 
-                }else {
+                } else {
 
                     System.out.println(game.getPlayer1().getFirstName() + ") " + game.getPlayer1Score());
                     System.out.println("*" + game.getPlayer2().getFirstName() + ") " + game.getPlayer2Score());
@@ -97,8 +96,8 @@ public class GameApp {
 
     }
 
-    public void scorePoint(){
-        while(true) {
+    public void scorePoint() {
+        while (true) {
             System.out.println("Which Player scored:");
             System.out.println("1. " + game.getPlayer1().getFirstName());
             System.out.println("2. " + game.getPlayer2().getFirstName());
@@ -115,17 +114,17 @@ public class GameApp {
         }
     }
 
-    public int getGameEnd(String gameMode){
+    public int getGameEnd(String gameMode) {
         int gameEnd = 0;
-        while(true) {
+        while (true) {
             try {
-                if(gameMode.equals("1")){
+                if (gameMode.equals("1")) {
                     gameEnd = 11;
                     break;
                 } else if (gameMode.equals("2")) {
                     gameEnd = 21;
                     break;
-                }else{
+                } else {
                     System.out.println("Invalid Selection..");
                     System.out.println("Try Again");
                 }
@@ -136,8 +135,8 @@ public class GameApp {
         return gameEnd;
     }
 
-    public void scoreGame(String whoWon){
-        while(true) {
+    public void scoreGame(String whoWon) {
+        while (true) {
 //            System.out.println("Which Player scored:");
 //            System.out.println("1. " + game.getPlayer1().getFirstName());
 //            System.out.println("2. " + game.getPlayer2().getFirstName());

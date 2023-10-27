@@ -7,6 +7,10 @@ public class Player {
     private String nickname;
     private String description;
 
+    //stats fields
+    private int playerWins;
+    private int playerLosses;
+    private int gamesPlayed;
 
     //constructor
     public Player(){
