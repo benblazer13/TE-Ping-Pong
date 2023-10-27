@@ -1,8 +1,10 @@
 package Profiles;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 public class JdbcPlayerDao {
 
-   // private final JdbcTemplate
+    private final JdbcTemplate
 
     int getPlayerCount(){
         int playerCount = 0;
