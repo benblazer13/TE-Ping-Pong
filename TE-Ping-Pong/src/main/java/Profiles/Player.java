@@ -2,6 +2,7 @@ package Profiles;
 
 public class Player {
 
+    private int playerId;
     private String firstName;
     private String lastName;
     private String nickname;
@@ -24,6 +25,38 @@ public class Player {
     }
     //getters and setters
 
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
+
+    public int getPlayerWins() {
+        return playerWins;
+    }
+
+    public void setPlayerWins(int playerWins) {
+        this.playerWins = playerWins;
+    }
+
+    public int getPlayerLosses() {
+        return playerLosses;
+    }
+
+    public void setPlayerLosses(int playerLosses) {
+        this.playerLosses = playerLosses;
+    }
+
+    public int getGamesPlayed() {
+        return gamesPlayed;
+    }
+
+    public void setGamesPlayed(int gamesPlayed) {
+        this.gamesPlayed = gamesPlayed;
+    }
 
     public String getFirstName() {
         return firstName;

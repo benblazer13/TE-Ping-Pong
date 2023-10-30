@@ -48,25 +48,47 @@ public class JdbcPlayerDao {
         return player;
      }
 
+     public Player getPlayerById(int playerId){
+        Player player = null;
+        String sql = "SELECT * FROM player where player_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, playerId);
+        if (results.next()){
+            player = mapRowToPlayer(results);
+        }
+        return player;
+     }
 
+     public Player createPlayer(Player player){
+        Player newPlayer;
+        String sql = "insert into player (first_name, last_name, description, nickname) " +
+                "values (?,?,?,?) returning id;";
+        int playerId = jdbcTemplate.queryForObject(sql, int.class,
+                player.getFirstName(),
+                player.getLastName(),
+                player.getDescription(),
+                player.getNickname());
+        newPlayer = getPlayerById(playerId);
+        return newPlayer;
+     }
 
+//     public Player updatePlayer(Player player){
+//        String sql = ""
+//     }
 
-
-
-
-//    Player getPlayerById(int playerId);
-//    List<Player> getPlayersByWins();
-//    Player createPlayer();
 //    Player updatePlayer();
 //    int deletePlayerById(int playerId);
 
 
     private Player mapRowToPlayer (SqlRowSet rowSet){
         Player player = new Player();
+        player.setPlayerId(rowSet.getInt("player_id"));
         player.setFirstName(rowSet.getString("first_name"));
         player.setLastName(rowSet.getString("last_name"));
         player.setDescription(rowSet.getString("description"));
         player.setNickname(rowSet.getString("nickname"));
+        player.setPlayerWins(rowSet.getInt("player_wins"));//player wins int
+        player.setPlayerLosses(rowSet.getInt("player_losses"));//player losses int
+        player.setGamesPlayed(rowSet.getInt("games_played"));//games_played
         return player;
     }
 
