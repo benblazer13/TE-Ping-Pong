@@ -94,6 +94,10 @@ public class GameApp {
         System.out.println();
         //game.getWinner
 
+        //if(match winner == player1){
+        // gameswon for player1 ++ && games lost for player 2 ++}
+        //else {
+        // games won for player 2 ++ && games lost for player 1 ++}
     }
 
     public void scorePoint() {
