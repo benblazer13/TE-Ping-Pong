@@ -92,7 +92,26 @@ public class JdbcPlayerDao {
         int playerId = player.getPlayerId();
         return getPlayerById(playerId);
     }
-    //TODO need to create 2 new update methods, one for winning one for losing
+
+    public Player updateWin(Player player){
+        String sql = "" +
+                "update player " +
+                "set player_wins = player_wins + 1 " +
+                "where id = ?;";
+
+        jdbcTemplate.update(sql, player.getPlayerId());
+        return getPlayerById(player.getPlayerId());
+    }
+
+    public Player updateLoss(Player player){
+        String sql = "" +
+                "update player " +
+                "set player_losses = player_losses + 1 " +
+                "where id = ?;";
+        jdbcTemplate.update(sql, player.getPlayerId());
+        return getPlayerById(player.getPlayerId());
+    }
+
 
     public void deletePlayer(int playerId) {
         String sql = "delete from player where id = ?;";
